@@ -19,7 +19,7 @@ func (s *Server) handleClientHandler(w http.ResponseWriter, r *http.Request) {
 	//websockets upgrade AND has chisel prefix
 	upgrade := strings.ToLower(r.Header.Get("Upgrade"))
 	protocol := r.Header.Get("Sec-WebSocket-Protocol")
-	if upgrade == "websocket"  {
+	if upgrade == "websocket" {
 		if protocol == chshare.ProtocolVersion {
 			s.handleWebsocket(w, r)
 			return
@@ -123,7 +123,7 @@ func (s *Server) handleWebsocket(w http.ResponseWriter, req *http.Request) {
 		//confirm reverse tunnels are allowed
 		if r.Reverse && !s.config.Reverse {
 			l.Debugf("Denied reverse port forwarding request, please enable --reverse")
-			failed(s.Errorf("Reverse port forwaring not enabled on server"))
+			failed(s.Errorf("Reverse port forwarding not enabled on server"))
 			return
 		}
 		//confirm reverse tunnel is available

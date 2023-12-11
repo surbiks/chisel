@@ -431,10 +431,10 @@ func client(args []string) {
 	flags.StringVar(&config.TLS.Cert, "tls-cert", "", "")
 	flags.StringVar(&config.TLS.Key, "tls-key", "", "")
 	flags.Var(&headerFlags{config.Headers}, "header", "")
+	flags.BoolVar(&config.Verbose, "v", false, "")
 	hostname := flags.String("hostname", "", "")
 	sni := flags.String("sni", "", "")
 	pid := flags.Bool("pid", false, "")
-	verbose := flags.Bool("v", false, "")
 	flags.Usage = func() {
 		fmt.Print(clientHelp)
 		os.Exit(0)
@@ -466,7 +466,6 @@ func client(args []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	c.Debug = *verbose
 	if *pid {
 		generatePidFile()
 	}
