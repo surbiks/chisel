@@ -71,7 +71,6 @@ func (t *Tunnel) BindSSH(ctx context.Context, c ssh.Conn, reqs <-chan *ssh.Reque
 		if c.Close() == nil {
 			t.Debugf("SSH cancelled")
 		}
-		t.activatingConn.DoneAll()
 	}()
 	//mark active and unblock
 	t.activeConnMut.Lock()
@@ -182,4 +181,8 @@ func (t *Tunnel) keepAliveLoop(sshConn ssh.Conn) {
 	}
 	//close ssh connection on abnormal ping
 	sshConn.Close()
+}
+
+func (t *Tunnel) Close() {
+	t.activatingConn.DoneAll()
 }
